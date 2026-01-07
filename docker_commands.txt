@@ -1,0 +1,185 @@
+#Build Docker Image or rebuilt
+docker build -t recommender_app .
+
+# to verify image created
+docker images
+
+# to remove images
+docker rmi <ID image>
+
+
+#run
+docker run -d --name recommender_app -p 5000:5000 --env-file ./backend/.env recommender_app
+"""
+-d = runs in background
+-p 5000:5000 = maps port 5000 (access via localhost:5000)
+--env-file = loads your API keys
+--name = names container "anime-app"
+"""
+
+# docker container
+docker ps
+
+# check logs
+docker logs recommender_app
+
+#stop docker container and remove the container
+docker stop anime-app && docker rm anime-app
+
+#inspect docker
+docker inspect recommender_app --format '{{json .Mounts}}'
+
+#stop all running containers
+docker stop $(docker ps -q)
+
+#remove all containers
+docker rm -f $(docker ps -aq)
+
+
+#restart docker container
+docker restart recommender_app
+
+
+
+github
+git checkout -b my-new-branch
+
+git add .
+git commit -m "Write a clear commit message here"
+
+git push -u origin my-new-branch
+
+# 1. Make sure .gitignore excludes .env
+echo ".env" >> .gitignore
+
+# 2. Remove .env from git tracking
+git rm --cached .env
+
+# 3. Remove from commit history
+git commit --amend -m "Add docker-compose multi-container setup"
+
+# 4. Force push
+git push -u origin docker-compose --force
+
+
+# 1. Delete the branch
+git branch -D docker-compose
+
+
+
+
+
+minikube
+kubectl apply -f k8.yaml
+minikube service llmops-service
+
+kubectl get pods
+kubectl get svc llmops-service
+
+minikube stop
+minikube start
+kubectl get nodes
+eval $(minikube docker-env)
+kubectl apply -f k8s.yaml
+kubectl get pods
+
+#to see service and note hte ports
+kubectl get svc
+
+
+
+
+#################
+docker-compose up --build
+docker-compose down
+
+
+docker ps       #See running containers:
+
+# Both containers
+docker-compose logs -f
+
+# Just backend
+docker-compose logs -f backend
+
+# Just frontend
+docker-compose logs -f frontend
+
+# Backend
+docker-compose exec backend bash
+
+# Frontend
+docker-compose exec frontend sh
+
+
+docker stats  # check resource useage
+
+# stop individual docker
+docker-compose stop backend
+docker-compose stop frontend
+
+
+
+
+# BUILD & START
+docker-compose up                    # Start all services
+docker-compose up -d                 # Start in background (detached)
+docker-compose up --build            # Rebuild images before starting
+docker-compose build                 # Just build, don't start
+
+# STOP & CLEAN
+docker-compose down                  # Stop and remove containers
+docker-compose down -v               # Also remove volumes (deletes data)
+docker-compose stop                  # Stop without removing
+docker-compose restart               # Restart all services
+
+# LOGS & MONITORING
+docker-compose logs -f               # Follow logs (all services)
+docker-compose logs -f backend       # Follow specific service
+docker-compose logs --tail=100       # Last 100 lines
+docker ps                            # List running containers
+docker stats                         # Resource usage (CPU, memory)
+
+# EXECUTE COMMANDS
+docker-compose exec backend bash     # Open shell in backend
+docker-compose exec frontend sh      # Open shell in frontend
+docker-compose exec backend python backend.py  # Run command
+
+# INSPECT & DEBUG
+docker-compose ps                    # Status of services
+docker inspect <container_id>        # Detailed container info
+docker-compose config                # Validate compose file
+
+# CLEANUP
+docker system prune                  # Remove unused containers/images
+docker volume prune                  # Remove unused volumes
+docker image prune                   # Remove unused images
+
+# INDIVIDUAL CONTAINERS
+docker start <container_name>        # Start stopped container
+docker stop <container_name>         # Stop running container
+docker rm <container_name>           # Remove container
+docker rmi <image_name>              # Remove image
+
+
+docker-compose up --build -d         # Start in background
+docker-compose logs -f               # Watch logs
+docker-compose down                  # Stop everything
+
+
+
+
+# RESTART ALL SERVICES
+docker-compose restart               # Quick restart (no rebuild)
+docker-compose down && docker-compose up -d   # Full restart
+
+# RESTART SPECIFIC SERVICE
+docker-compose restart backend       # Restart only backend
+docker-compose restart frontend      # Restart only frontend
+
+# RESTART WITH REBUILD (if you changed code)
+docker-compose down
+docker-compose up --build -d
+
+# RESTART INDIVIDUAL CONTAINER
+docker restart <container_name>      # Use container name from 'docker ps'

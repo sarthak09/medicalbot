@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-huggingface
+langchain_groq
+chromadb
+python-dotenv
+sentence-transformers
+langchain_huggingface
+ipykernel
+flask 
+flask-cors 
+requests
+pypdf
